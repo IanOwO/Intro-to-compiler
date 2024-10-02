@@ -1,0 +1,2262 @@
+Terminals unused in grammar
+
+   KWDEF
+   KWOCTAL
+
+
+State 15 conflicts: 4 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: KWID KWSEMICOLON zero_more_var_const_declare zero_more_func_declare_or_def compound_statement KWEND
+
+    2 zero_more_func_declare_or_def: func_declare_or_def zero_more_func_declare_or_def
+    3                              | %empty
+
+    4 func_declare_or_def: KWID KWL_PAREN argument KWR_PAREN KWCOLON scalar_type KWSEMICOLON
+    5                    | KWID KWL_PAREN argument KWR_PAREN KWSEMICOLON
+    6                    | KWID KWL_PAREN argument KWR_PAREN KWCOLON scalar_type compound_statement KWEND
+    7                    | KWID KWL_PAREN argument KWR_PAREN compound_statement KWEND
+
+    8 zero_more_var_const_declare: var_const_declare zero_more_var_const_declare
+    9                            | %empty
+
+   10 var_const_declare: KWVAR id_list KWCOLON scalar_type KWSEMICOLON
+   11                  | KWVAR id_list KWCOLON dimention scalar_type KWSEMICOLON
+   12                  | KWVAR id_list KWCOLON literal_const KWSEMICOLON
+
+   13 dimention: KWARR KWDECIMAL KWOF dimention
+   14          | %empty
+
+   15 id_list: id_list KWCOMMA KWID
+   16        | KWID
+
+   17 scalar_type: KWBOOL
+   18            | KWINT
+   19            | KWREAL
+   20            | KWSTR
+
+   21 argument: id_list KWCOLON scalar_type argument
+   22         | %empty
+
+   23 literal_const: KWDECIMAL
+   24              | KWFLOAT
+   25              | KWSTRING
+   26              | KWSCIENTIFIC
+   27              | KWTRUE
+   28              | KWFALSE
+
+   29 var_reference: KWID zero_more_bracket
+
+   30 zero_more_bracket: KWL_BRACKET expression KWR_BRACKET zero_more_bracket
+   31                  | %empty
+
+   32 compound_statement: KWBEGIN zero_more_var_const_declare zero_more_statement KWEND
+
+   33 statement: var_reference KWASSIGN expression KWSEMICOLON
+   34          | KWPRINT expression KWSEMICOLON
+   35          | KWREAD var_reference KWSEMICOLON
+   36          | KWIF expression KWTHEN compound_statement KWELSE compound_statement KWEND KWIF
+   37          | KWIF expression KWTHEN compound_statement KWEND KWIF
+   38          | KWWHILE expression KWDO compound_statement KWEND KWDO
+   39          | KWFOR KWID KWASSIGN KWDECIMAL KWTO KWDECIMAL KWDO compound_statement KWEND KWDO
+   40          | KWRETURN expression KWSEMICOLON
+   41          | KWID KWL_PAREN comma_expression KWR_PAREN KWSEMICOLON
+   42          | KWID KWL_PAREN KWR_PAREN KWSEMICOLON
+
+   43 zero_more_statement: statement zero_more_statement
+   44                    | compound_statement zero_more_statement
+   45                    | %empty
+
+   46 comma_expression: comma_expression KWCOMMA expression
+   47                 | expression
+
+   48 expression: KWID KWL_PAREN comma_expression KWR_PAREN
+   49           | KWID KWL_PAREN KWR_PAREN
+   50           | KWSUB expression
+   51           | expression KWMUL expression
+   52           | expression KWDIV expression
+   53           | expression KWMOD expression
+   54           | expression KWADD expression
+   55           | expression KWSUB expression
+   56           | expression KWNE expression
+   57           | expression KWLE expression
+   58           | expression KWLT expression
+   59           | expression KWGE expression
+   60           | expression KWGT expression
+   61           | expression KWEQ expression
+   62           | expression KWAND expression
+   63           | expression KWOR expression
+   64           | KWNOT expression
+   65           | KWL_PAREN expression KWR_PAREN
+   66           | literal_const
+   67           | var_reference
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+KWID (258) 1 4 5 6 7 15 16 29 39 41 42 48 49
+KWCOMMA (259) 15 46
+KWSEMICOLON (260) 1 4 5 10 11 12 33 34 35 40 41 42
+KWCOLON (261) 4 6 10 11 12 21
+KWL_PAREN (262) 4 5 6 7 41 42 48 49 65
+KWR_PAREN (263) 4 5 6 7 41 42 48 49 65
+KWL_BRACKET (264) 30
+KWR_BRACKET (265) 30
+KWVAR (266) 10 11 12
+KWARR (267) 13
+KWOF (268) 13
+KWBOOL (269) 17
+KWINT (270) 18
+KWREAL (271) 19
+KWSTR (272) 20
+KWTRUE (273) 27
+KWFALSE (274) 28
+KWDEF (275)
+KWRETURN (276) 40
+KWBEGIN (277) 32
+KWEND (278) 1 6 7 32 36 37 38 39
+KWWHILE (279) 38
+KWDO (280) 38 39
+KWIF (281) 36 37
+KWTHEN (282) 36 37
+KWELSE (283) 36
+KWFOR (284) 39
+KWTO (285) 39
+KWPRINT (286) 34
+KWREAD (287) 35
+KWSCIENTIFIC (288) 26
+KWFLOAT (289) 24
+KWOCTAL (290)
+KWDECIMAL (291) 13 23 39
+KWSTRING (292) 25
+KWADD (293) 54
+KWSUB (294) 50 55
+KWMUL (295) 51
+KWDIV (296) 52
+KWMOD (297) 53
+KWLT (298) 58
+KWLE (299) 57
+KWNE (300) 56
+KWGE (301) 59
+KWGT (302) 60
+KWEQ (303) 61
+KWAND (304) 62
+KWOR (305) 63
+KWASSIGN (306) 33 39
+KWNOT (307) 64
+
+
+Nonterminals, with rules where they appear
+
+$accept (53)
+    on left: 0
+program (54)
+    on left: 1, on right: 0
+zero_more_func_declare_or_def (55)
+    on left: 2 3, on right: 1 2
+func_declare_or_def (56)
+    on left: 4 5 6 7, on right: 2
+zero_more_var_const_declare (57)
+    on left: 8 9, on right: 1 8 32
+var_const_declare (58)
+    on left: 10 11 12, on right: 8
+dimention (59)
+    on left: 13 14, on right: 11 13
+id_list (60)
+    on left: 15 16, on right: 10 11 12 15 21
+scalar_type (61)
+    on left: 17 18 19 20, on right: 4 6 10 11 21
+argument (62)
+    on left: 21 22, on right: 4 5 6 7 21
+literal_const (63)
+    on left: 23 24 25 26 27 28, on right: 12 66
+var_reference (64)
+    on left: 29, on right: 33 35 67
+zero_more_bracket (65)
+    on left: 30 31, on right: 29 30
+compound_statement (66)
+    on left: 32, on right: 1 6 7 36 37 38 39 44
+statement (67)
+    on left: 33 34 35 36 37 38 39 40 41 42, on right: 43
+zero_more_statement (68)
+    on left: 43 44 45, on right: 32 43 44
+comma_expression (69)
+    on left: 46 47, on right: 41 46 48
+expression (70)
+    on left: 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65
+    66 67, on right: 30 33 34 36 37 38 40 46 47 50 51 52 53 54 55 56
+    57 58 59 60 61 62 63 64 65
+
+
+State 0
+
+    0 $accept: . program $end
+
+    KWID  shift, and go to state 1
+
+    program  go to state 2
+
+
+State 1
+
+    1 program: KWID . KWSEMICOLON zero_more_var_const_declare zero_more_func_declare_or_def compound_statement KWEND
+
+    KWSEMICOLON  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    1 program: KWID KWSEMICOLON . zero_more_var_const_declare zero_more_func_declare_or_def compound_statement KWEND
+
+    KWVAR  shift, and go to state 5
+
+    $default  reduce using rule 9 (zero_more_var_const_declare)
+
+    zero_more_var_const_declare  go to state 6
+    var_const_declare            go to state 7
+
+
+State 4
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 5
+
+   10 var_const_declare: KWVAR . id_list KWCOLON scalar_type KWSEMICOLON
+   11                  | KWVAR . id_list KWCOLON dimention scalar_type KWSEMICOLON
+   12                  | KWVAR . id_list KWCOLON literal_const KWSEMICOLON
+
+    KWID  shift, and go to state 8
+
+    id_list  go to state 9
+
+
+State 6
+
+    1 program: KWID KWSEMICOLON zero_more_var_const_declare . zero_more_func_declare_or_def compound_statement KWEND
+
+    KWID  shift, and go to state 10
+
+    $default  reduce using rule 3 (zero_more_func_declare_or_def)
+
+    zero_more_func_declare_or_def  go to state 11
+    func_declare_or_def            go to state 12
+
+
+State 7
+
+    8 zero_more_var_const_declare: var_const_declare . zero_more_var_const_declare
+
+    KWVAR  shift, and go to state 5
+
+    $default  reduce using rule 9 (zero_more_var_const_declare)
+
+    zero_more_var_const_declare  go to state 13
+    var_const_declare            go to state 7
+
+
+State 8
+
+   16 id_list: KWID .
+
+    $default  reduce using rule 16 (id_list)
+
+
+State 9
+
+   10 var_const_declare: KWVAR id_list . KWCOLON scalar_type KWSEMICOLON
+   11                  | KWVAR id_list . KWCOLON dimention scalar_type KWSEMICOLON
+   12                  | KWVAR id_list . KWCOLON literal_const KWSEMICOLON
+   15 id_list: id_list . KWCOMMA KWID
+
+    KWCOMMA  shift, and go to state 14
+    KWCOLON  shift, and go to state 15
+
+
+State 10
+
+    4 func_declare_or_def: KWID . KWL_PAREN argument KWR_PAREN KWCOLON scalar_type KWSEMICOLON
+    5                    | KWID . KWL_PAREN argument KWR_PAREN KWSEMICOLON
+    6                    | KWID . KWL_PAREN argument KWR_PAREN KWCOLON scalar_type compound_statement KWEND
+    7                    | KWID . KWL_PAREN argument KWR_PAREN compound_statement KWEND
+
+    KWL_PAREN  shift, and go to state 16
+
+
+State 11
+
+    1 program: KWID KWSEMICOLON zero_more_var_const_declare zero_more_func_declare_or_def . compound_statement KWEND
+
+    KWBEGIN  shift, and go to state 17
+
+    compound_statement  go to state 18
+
+
+State 12
+
+    2 zero_more_func_declare_or_def: func_declare_or_def . zero_more_func_declare_or_def
+
+    KWID  shift, and go to state 10
+
+    $default  reduce using rule 3 (zero_more_func_declare_or_def)
+
+    zero_more_func_declare_or_def  go to state 19
+    func_declare_or_def            go to state 12
+
+
+State 13
+
+    8 zero_more_var_const_declare: var_const_declare zero_more_var_const_declare .
+
+    $default  reduce using rule 8 (zero_more_var_const_declare)
+
+
+State 14
+
+   15 id_list: id_list KWCOMMA . KWID
+
+    KWID  shift, and go to state 20
+
+
+State 15
+
+   10 var_const_declare: KWVAR id_list KWCOLON . scalar_type KWSEMICOLON
+   11                  | KWVAR id_list KWCOLON . dimention scalar_type KWSEMICOLON
+   12                  | KWVAR id_list KWCOLON . literal_const KWSEMICOLON
+
+    KWARR         shift, and go to state 21
+    KWBOOL        shift, and go to state 22
+    KWINT         shift, and go to state 23
+    KWREAL        shift, and go to state 24
+    KWSTR         shift, and go to state 25
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+
+    KWBOOL  [reduce using rule 14 (dimention)]
+    KWINT   [reduce using rule 14 (dimention)]
+    KWREAL  [reduce using rule 14 (dimention)]
+    KWSTR   [reduce using rule 14 (dimention)]
+
+    dimention      go to state 32
+    scalar_type    go to state 33
+    literal_const  go to state 34
+
+
+State 16
+
+    4 func_declare_or_def: KWID KWL_PAREN . argument KWR_PAREN KWCOLON scalar_type KWSEMICOLON
+    5                    | KWID KWL_PAREN . argument KWR_PAREN KWSEMICOLON
+    6                    | KWID KWL_PAREN . argument KWR_PAREN KWCOLON scalar_type compound_statement KWEND
+    7                    | KWID KWL_PAREN . argument KWR_PAREN compound_statement KWEND
+
+    KWID  shift, and go to state 8
+
+    $default  reduce using rule 22 (argument)
+
+    id_list   go to state 35
+    argument  go to state 36
+
+
+State 17
+
+   32 compound_statement: KWBEGIN . zero_more_var_const_declare zero_more_statement KWEND
+
+    KWVAR  shift, and go to state 5
+
+    $default  reduce using rule 9 (zero_more_var_const_declare)
+
+    zero_more_var_const_declare  go to state 37
+    var_const_declare            go to state 7
+
+
+State 18
+
+    1 program: KWID KWSEMICOLON zero_more_var_const_declare zero_more_func_declare_or_def compound_statement . KWEND
+
+    KWEND  shift, and go to state 38
+
+
+State 19
+
+    2 zero_more_func_declare_or_def: func_declare_or_def zero_more_func_declare_or_def .
+
+    $default  reduce using rule 2 (zero_more_func_declare_or_def)
+
+
+State 20
+
+   15 id_list: id_list KWCOMMA KWID .
+
+    $default  reduce using rule 15 (id_list)
+
+
+State 21
+
+   13 dimention: KWARR . KWDECIMAL KWOF dimention
+
+    KWDECIMAL  shift, and go to state 39
+
+
+State 22
+
+   17 scalar_type: KWBOOL .
+
+    $default  reduce using rule 17 (scalar_type)
+
+
+State 23
+
+   18 scalar_type: KWINT .
+
+    $default  reduce using rule 18 (scalar_type)
+
+
+State 24
+
+   19 scalar_type: KWREAL .
+
+    $default  reduce using rule 19 (scalar_type)
+
+
+State 25
+
+   20 scalar_type: KWSTR .
+
+    $default  reduce using rule 20 (scalar_type)
+
+
+State 26
+
+   27 literal_const: KWTRUE .
+
+    $default  reduce using rule 27 (literal_const)
+
+
+State 27
+
+   28 literal_const: KWFALSE .
+
+    $default  reduce using rule 28 (literal_const)
+
+
+State 28
+
+   26 literal_const: KWSCIENTIFIC .
+
+    $default  reduce using rule 26 (literal_const)
+
+
+State 29
+
+   24 literal_const: KWFLOAT .
+
+    $default  reduce using rule 24 (literal_const)
+
+
+State 30
+
+   23 literal_const: KWDECIMAL .
+
+    $default  reduce using rule 23 (literal_const)
+
+
+State 31
+
+   25 literal_const: KWSTRING .
+
+    $default  reduce using rule 25 (literal_const)
+
+
+State 32
+
+   11 var_const_declare: KWVAR id_list KWCOLON dimention . scalar_type KWSEMICOLON
+
+    KWBOOL  shift, and go to state 22
+    KWINT   shift, and go to state 23
+    KWREAL  shift, and go to state 24
+    KWSTR   shift, and go to state 25
+
+    scalar_type  go to state 40
+
+
+State 33
+
+   10 var_const_declare: KWVAR id_list KWCOLON scalar_type . KWSEMICOLON
+
+    KWSEMICOLON  shift, and go to state 41
+
+
+State 34
+
+   12 var_const_declare: KWVAR id_list KWCOLON literal_const . KWSEMICOLON
+
+    KWSEMICOLON  shift, and go to state 42
+
+
+State 35
+
+   15 id_list: id_list . KWCOMMA KWID
+   21 argument: id_list . KWCOLON scalar_type argument
+
+    KWCOMMA  shift, and go to state 14
+    KWCOLON  shift, and go to state 43
+
+
+State 36
+
+    4 func_declare_or_def: KWID KWL_PAREN argument . KWR_PAREN KWCOLON scalar_type KWSEMICOLON
+    5                    | KWID KWL_PAREN argument . KWR_PAREN KWSEMICOLON
+    6                    | KWID KWL_PAREN argument . KWR_PAREN KWCOLON scalar_type compound_statement KWEND
+    7                    | KWID KWL_PAREN argument . KWR_PAREN compound_statement KWEND
+
+    KWR_PAREN  shift, and go to state 44
+
+
+State 37
+
+   32 compound_statement: KWBEGIN zero_more_var_const_declare . zero_more_statement KWEND
+
+    KWID      shift, and go to state 45
+    KWRETURN  shift, and go to state 46
+    KWBEGIN   shift, and go to state 17
+    KWWHILE   shift, and go to state 47
+    KWIF      shift, and go to state 48
+    KWFOR     shift, and go to state 49
+    KWPRINT   shift, and go to state 50
+    KWREAD    shift, and go to state 51
+
+    $default  reduce using rule 45 (zero_more_statement)
+
+    var_reference        go to state 52
+    compound_statement   go to state 53
+    statement            go to state 54
+    zero_more_statement  go to state 55
+
+
+State 38
+
+    1 program: KWID KWSEMICOLON zero_more_var_const_declare zero_more_func_declare_or_def compound_statement KWEND .
+
+    $default  reduce using rule 1 (program)
+
+
+State 39
+
+   13 dimention: KWARR KWDECIMAL . KWOF dimention
+
+    KWOF  shift, and go to state 56
+
+
+State 40
+
+   11 var_const_declare: KWVAR id_list KWCOLON dimention scalar_type . KWSEMICOLON
+
+    KWSEMICOLON  shift, and go to state 57
+
+
+State 41
+
+   10 var_const_declare: KWVAR id_list KWCOLON scalar_type KWSEMICOLON .
+
+    $default  reduce using rule 10 (var_const_declare)
+
+
+State 42
+
+   12 var_const_declare: KWVAR id_list KWCOLON literal_const KWSEMICOLON .
+
+    $default  reduce using rule 12 (var_const_declare)
+
+
+State 43
+
+   21 argument: id_list KWCOLON . scalar_type argument
+
+    KWBOOL  shift, and go to state 22
+    KWINT   shift, and go to state 23
+    KWREAL  shift, and go to state 24
+    KWSTR   shift, and go to state 25
+
+    scalar_type  go to state 58
+
+
+State 44
+
+    4 func_declare_or_def: KWID KWL_PAREN argument KWR_PAREN . KWCOLON scalar_type KWSEMICOLON
+    5                    | KWID KWL_PAREN argument KWR_PAREN . KWSEMICOLON
+    6                    | KWID KWL_PAREN argument KWR_PAREN . KWCOLON scalar_type compound_statement KWEND
+    7                    | KWID KWL_PAREN argument KWR_PAREN . compound_statement KWEND
+
+    KWSEMICOLON  shift, and go to state 59
+    KWCOLON      shift, and go to state 60
+    KWBEGIN      shift, and go to state 17
+
+    compound_statement  go to state 61
+
+
+State 45
+
+   29 var_reference: KWID . zero_more_bracket
+   41 statement: KWID . KWL_PAREN comma_expression KWR_PAREN KWSEMICOLON
+   42          | KWID . KWL_PAREN KWR_PAREN KWSEMICOLON
+
+    KWL_PAREN    shift, and go to state 62
+    KWL_BRACKET  shift, and go to state 63
+
+    $default  reduce using rule 31 (zero_more_bracket)
+
+    zero_more_bracket  go to state 64
+
+
+State 46
+
+   40 statement: KWRETURN . expression KWSEMICOLON
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 71
+
+
+State 47
+
+   38 statement: KWWHILE . expression KWDO compound_statement KWEND KWDO
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 72
+
+
+State 48
+
+   36 statement: KWIF . expression KWTHEN compound_statement KWELSE compound_statement KWEND KWIF
+   37          | KWIF . expression KWTHEN compound_statement KWEND KWIF
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 73
+
+
+State 49
+
+   39 statement: KWFOR . KWID KWASSIGN KWDECIMAL KWTO KWDECIMAL KWDO compound_statement KWEND KWDO
+
+    KWID  shift, and go to state 74
+
+
+State 50
+
+   34 statement: KWPRINT . expression KWSEMICOLON
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 75
+
+
+State 51
+
+   35 statement: KWREAD . var_reference KWSEMICOLON
+
+    KWID  shift, and go to state 76
+
+    var_reference  go to state 77
+
+
+State 52
+
+   33 statement: var_reference . KWASSIGN expression KWSEMICOLON
+
+    KWASSIGN  shift, and go to state 78
+
+
+State 53
+
+   44 zero_more_statement: compound_statement . zero_more_statement
+
+    KWID      shift, and go to state 45
+    KWRETURN  shift, and go to state 46
+    KWBEGIN   shift, and go to state 17
+    KWWHILE   shift, and go to state 47
+    KWIF      shift, and go to state 48
+    KWFOR     shift, and go to state 49
+    KWPRINT   shift, and go to state 50
+    KWREAD    shift, and go to state 51
+
+    $default  reduce using rule 45 (zero_more_statement)
+
+    var_reference        go to state 52
+    compound_statement   go to state 53
+    statement            go to state 54
+    zero_more_statement  go to state 79
+
+
+State 54
+
+   43 zero_more_statement: statement . zero_more_statement
+
+    KWID      shift, and go to state 45
+    KWRETURN  shift, and go to state 46
+    KWBEGIN   shift, and go to state 17
+    KWWHILE   shift, and go to state 47
+    KWIF      shift, and go to state 48
+    KWFOR     shift, and go to state 49
+    KWPRINT   shift, and go to state 50
+    KWREAD    shift, and go to state 51
+
+    $default  reduce using rule 45 (zero_more_statement)
+
+    var_reference        go to state 52
+    compound_statement   go to state 53
+    statement            go to state 54
+    zero_more_statement  go to state 80
+
+
+State 55
+
+   32 compound_statement: KWBEGIN zero_more_var_const_declare zero_more_statement . KWEND
+
+    KWEND  shift, and go to state 81
+
+
+State 56
+
+   13 dimention: KWARR KWDECIMAL KWOF . dimention
+
+    KWARR  shift, and go to state 21
+
+    $default  reduce using rule 14 (dimention)
+
+    dimention  go to state 82
+
+
+State 57
+
+   11 var_const_declare: KWVAR id_list KWCOLON dimention scalar_type KWSEMICOLON .
+
+    $default  reduce using rule 11 (var_const_declare)
+
+
+State 58
+
+   21 argument: id_list KWCOLON scalar_type . argument
+
+    KWID  shift, and go to state 8
+
+    $default  reduce using rule 22 (argument)
+
+    id_list   go to state 35
+    argument  go to state 83
+
+
+State 59
+
+    5 func_declare_or_def: KWID KWL_PAREN argument KWR_PAREN KWSEMICOLON .
+
+    $default  reduce using rule 5 (func_declare_or_def)
+
+
+State 60
+
+    4 func_declare_or_def: KWID KWL_PAREN argument KWR_PAREN KWCOLON . scalar_type KWSEMICOLON
+    6                    | KWID KWL_PAREN argument KWR_PAREN KWCOLON . scalar_type compound_statement KWEND
+
+    KWBOOL  shift, and go to state 22
+    KWINT   shift, and go to state 23
+    KWREAL  shift, and go to state 24
+    KWSTR   shift, and go to state 25
+
+    scalar_type  go to state 84
+
+
+State 61
+
+    7 func_declare_or_def: KWID KWL_PAREN argument KWR_PAREN compound_statement . KWEND
+
+    KWEND  shift, and go to state 85
+
+
+State 62
+
+   41 statement: KWID KWL_PAREN . comma_expression KWR_PAREN KWSEMICOLON
+   42          | KWID KWL_PAREN . KWR_PAREN KWSEMICOLON
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWR_PAREN     shift, and go to state 86
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const     go to state 69
+    var_reference     go to state 70
+    comma_expression  go to state 87
+    expression        go to state 88
+
+
+State 63
+
+   30 zero_more_bracket: KWL_BRACKET . expression KWR_BRACKET zero_more_bracket
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 89
+
+
+State 64
+
+   29 var_reference: KWID zero_more_bracket .
+
+    $default  reduce using rule 29 (var_reference)
+
+
+State 65
+
+   29 var_reference: KWID . zero_more_bracket
+   48 expression: KWID . KWL_PAREN comma_expression KWR_PAREN
+   49           | KWID . KWL_PAREN KWR_PAREN
+
+    KWL_PAREN    shift, and go to state 90
+    KWL_BRACKET  shift, and go to state 63
+
+    $default  reduce using rule 31 (zero_more_bracket)
+
+    zero_more_bracket  go to state 64
+
+
+State 66
+
+   65 expression: KWL_PAREN . expression KWR_PAREN
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 91
+
+
+State 67
+
+   50 expression: KWSUB . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 92
+
+
+State 68
+
+   64 expression: KWNOT . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 93
+
+
+State 69
+
+   66 expression: literal_const .
+
+    $default  reduce using rule 66 (expression)
+
+
+State 70
+
+   67 expression: var_reference .
+
+    $default  reduce using rule 67 (expression)
+
+
+State 71
+
+   40 statement: KWRETURN expression . KWSEMICOLON
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    KWSEMICOLON  shift, and go to state 94
+    KWADD        shift, and go to state 95
+    KWSUB        shift, and go to state 96
+    KWMUL        shift, and go to state 97
+    KWDIV        shift, and go to state 98
+    KWMOD        shift, and go to state 99
+    KWLT         shift, and go to state 100
+    KWLE         shift, and go to state 101
+    KWNE         shift, and go to state 102
+    KWGE         shift, and go to state 103
+    KWGT         shift, and go to state 104
+    KWEQ         shift, and go to state 105
+    KWAND        shift, and go to state 106
+    KWOR         shift, and go to state 107
+
+
+State 72
+
+   38 statement: KWWHILE expression . KWDO compound_statement KWEND KWDO
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    KWDO   shift, and go to state 108
+    KWADD  shift, and go to state 95
+    KWSUB  shift, and go to state 96
+    KWMUL  shift, and go to state 97
+    KWDIV  shift, and go to state 98
+    KWMOD  shift, and go to state 99
+    KWLT   shift, and go to state 100
+    KWLE   shift, and go to state 101
+    KWNE   shift, and go to state 102
+    KWGE   shift, and go to state 103
+    KWGT   shift, and go to state 104
+    KWEQ   shift, and go to state 105
+    KWAND  shift, and go to state 106
+    KWOR   shift, and go to state 107
+
+
+State 73
+
+   36 statement: KWIF expression . KWTHEN compound_statement KWELSE compound_statement KWEND KWIF
+   37          | KWIF expression . KWTHEN compound_statement KWEND KWIF
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    KWTHEN  shift, and go to state 109
+    KWADD   shift, and go to state 95
+    KWSUB   shift, and go to state 96
+    KWMUL   shift, and go to state 97
+    KWDIV   shift, and go to state 98
+    KWMOD   shift, and go to state 99
+    KWLT    shift, and go to state 100
+    KWLE    shift, and go to state 101
+    KWNE    shift, and go to state 102
+    KWGE    shift, and go to state 103
+    KWGT    shift, and go to state 104
+    KWEQ    shift, and go to state 105
+    KWAND   shift, and go to state 106
+    KWOR    shift, and go to state 107
+
+
+State 74
+
+   39 statement: KWFOR KWID . KWASSIGN KWDECIMAL KWTO KWDECIMAL KWDO compound_statement KWEND KWDO
+
+    KWASSIGN  shift, and go to state 110
+
+
+State 75
+
+   34 statement: KWPRINT expression . KWSEMICOLON
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    KWSEMICOLON  shift, and go to state 111
+    KWADD        shift, and go to state 95
+    KWSUB        shift, and go to state 96
+    KWMUL        shift, and go to state 97
+    KWDIV        shift, and go to state 98
+    KWMOD        shift, and go to state 99
+    KWLT         shift, and go to state 100
+    KWLE         shift, and go to state 101
+    KWNE         shift, and go to state 102
+    KWGE         shift, and go to state 103
+    KWGT         shift, and go to state 104
+    KWEQ         shift, and go to state 105
+    KWAND        shift, and go to state 106
+    KWOR         shift, and go to state 107
+
+
+State 76
+
+   29 var_reference: KWID . zero_more_bracket
+
+    KWL_BRACKET  shift, and go to state 63
+
+    $default  reduce using rule 31 (zero_more_bracket)
+
+    zero_more_bracket  go to state 64
+
+
+State 77
+
+   35 statement: KWREAD var_reference . KWSEMICOLON
+
+    KWSEMICOLON  shift, and go to state 112
+
+
+State 78
+
+   33 statement: var_reference KWASSIGN . expression KWSEMICOLON
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 113
+
+
+State 79
+
+   44 zero_more_statement: compound_statement zero_more_statement .
+
+    $default  reduce using rule 44 (zero_more_statement)
+
+
+State 80
+
+   43 zero_more_statement: statement zero_more_statement .
+
+    $default  reduce using rule 43 (zero_more_statement)
+
+
+State 81
+
+   32 compound_statement: KWBEGIN zero_more_var_const_declare zero_more_statement KWEND .
+
+    $default  reduce using rule 32 (compound_statement)
+
+
+State 82
+
+   13 dimention: KWARR KWDECIMAL KWOF dimention .
+
+    $default  reduce using rule 13 (dimention)
+
+
+State 83
+
+   21 argument: id_list KWCOLON scalar_type argument .
+
+    $default  reduce using rule 21 (argument)
+
+
+State 84
+
+    4 func_declare_or_def: KWID KWL_PAREN argument KWR_PAREN KWCOLON scalar_type . KWSEMICOLON
+    6                    | KWID KWL_PAREN argument KWR_PAREN KWCOLON scalar_type . compound_statement KWEND
+
+    KWSEMICOLON  shift, and go to state 114
+    KWBEGIN      shift, and go to state 17
+
+    compound_statement  go to state 115
+
+
+State 85
+
+    7 func_declare_or_def: KWID KWL_PAREN argument KWR_PAREN compound_statement KWEND .
+
+    $default  reduce using rule 7 (func_declare_or_def)
+
+
+State 86
+
+   42 statement: KWID KWL_PAREN KWR_PAREN . KWSEMICOLON
+
+    KWSEMICOLON  shift, and go to state 116
+
+
+State 87
+
+   41 statement: KWID KWL_PAREN comma_expression . KWR_PAREN KWSEMICOLON
+   46 comma_expression: comma_expression . KWCOMMA expression
+
+    KWCOMMA    shift, and go to state 117
+    KWR_PAREN  shift, and go to state 118
+
+
+State 88
+
+   47 comma_expression: expression .
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    KWADD  shift, and go to state 95
+    KWSUB  shift, and go to state 96
+    KWMUL  shift, and go to state 97
+    KWDIV  shift, and go to state 98
+    KWMOD  shift, and go to state 99
+    KWLT   shift, and go to state 100
+    KWLE   shift, and go to state 101
+    KWNE   shift, and go to state 102
+    KWGE   shift, and go to state 103
+    KWGT   shift, and go to state 104
+    KWEQ   shift, and go to state 105
+    KWAND  shift, and go to state 106
+    KWOR   shift, and go to state 107
+
+    $default  reduce using rule 47 (comma_expression)
+
+
+State 89
+
+   30 zero_more_bracket: KWL_BRACKET expression . KWR_BRACKET zero_more_bracket
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    KWR_BRACKET  shift, and go to state 119
+    KWADD        shift, and go to state 95
+    KWSUB        shift, and go to state 96
+    KWMUL        shift, and go to state 97
+    KWDIV        shift, and go to state 98
+    KWMOD        shift, and go to state 99
+    KWLT         shift, and go to state 100
+    KWLE         shift, and go to state 101
+    KWNE         shift, and go to state 102
+    KWGE         shift, and go to state 103
+    KWGT         shift, and go to state 104
+    KWEQ         shift, and go to state 105
+    KWAND        shift, and go to state 106
+    KWOR         shift, and go to state 107
+
+
+State 90
+
+   48 expression: KWID KWL_PAREN . comma_expression KWR_PAREN
+   49           | KWID KWL_PAREN . KWR_PAREN
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWR_PAREN     shift, and go to state 120
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const     go to state 69
+    var_reference     go to state 70
+    comma_expression  go to state 121
+    expression        go to state 88
+
+
+State 91
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+   65           | KWL_PAREN expression . KWR_PAREN
+
+    KWR_PAREN  shift, and go to state 122
+    KWADD      shift, and go to state 95
+    KWSUB      shift, and go to state 96
+    KWMUL      shift, and go to state 97
+    KWDIV      shift, and go to state 98
+    KWMOD      shift, and go to state 99
+    KWLT       shift, and go to state 100
+    KWLE       shift, and go to state 101
+    KWNE       shift, and go to state 102
+    KWGE       shift, and go to state 103
+    KWGT       shift, and go to state 104
+    KWEQ       shift, and go to state 105
+    KWAND      shift, and go to state 106
+    KWOR       shift, and go to state 107
+
+
+State 92
+
+   50 expression: KWSUB expression .
+   51           | expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    $default  reduce using rule 50 (expression)
+
+
+State 93
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+   64           | KWNOT expression .
+
+    $default  reduce using rule 64 (expression)
+
+
+State 94
+
+   40 statement: KWRETURN expression KWSEMICOLON .
+
+    $default  reduce using rule 40 (statement)
+
+
+State 95
+
+   54 expression: expression KWADD . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 123
+
+
+State 96
+
+   55 expression: expression KWSUB . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 124
+
+
+State 97
+
+   51 expression: expression KWMUL . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 125
+
+
+State 98
+
+   52 expression: expression KWDIV . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 126
+
+
+State 99
+
+   53 expression: expression KWMOD . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 127
+
+
+State 100
+
+   58 expression: expression KWLT . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 128
+
+
+State 101
+
+   57 expression: expression KWLE . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 129
+
+
+State 102
+
+   56 expression: expression KWNE . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 130
+
+
+State 103
+
+   59 expression: expression KWGE . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 131
+
+
+State 104
+
+   60 expression: expression KWGT . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 132
+
+
+State 105
+
+   61 expression: expression KWEQ . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 133
+
+
+State 106
+
+   62 expression: expression KWAND . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 134
+
+
+State 107
+
+   63 expression: expression KWOR . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 135
+
+
+State 108
+
+   38 statement: KWWHILE expression KWDO . compound_statement KWEND KWDO
+
+    KWBEGIN  shift, and go to state 17
+
+    compound_statement  go to state 136
+
+
+State 109
+
+   36 statement: KWIF expression KWTHEN . compound_statement KWELSE compound_statement KWEND KWIF
+   37          | KWIF expression KWTHEN . compound_statement KWEND KWIF
+
+    KWBEGIN  shift, and go to state 17
+
+    compound_statement  go to state 137
+
+
+State 110
+
+   39 statement: KWFOR KWID KWASSIGN . KWDECIMAL KWTO KWDECIMAL KWDO compound_statement KWEND KWDO
+
+    KWDECIMAL  shift, and go to state 138
+
+
+State 111
+
+   34 statement: KWPRINT expression KWSEMICOLON .
+
+    $default  reduce using rule 34 (statement)
+
+
+State 112
+
+   35 statement: KWREAD var_reference KWSEMICOLON .
+
+    $default  reduce using rule 35 (statement)
+
+
+State 113
+
+   33 statement: var_reference KWASSIGN expression . KWSEMICOLON
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    KWSEMICOLON  shift, and go to state 139
+    KWADD        shift, and go to state 95
+    KWSUB        shift, and go to state 96
+    KWMUL        shift, and go to state 97
+    KWDIV        shift, and go to state 98
+    KWMOD        shift, and go to state 99
+    KWLT         shift, and go to state 100
+    KWLE         shift, and go to state 101
+    KWNE         shift, and go to state 102
+    KWGE         shift, and go to state 103
+    KWGT         shift, and go to state 104
+    KWEQ         shift, and go to state 105
+    KWAND        shift, and go to state 106
+    KWOR         shift, and go to state 107
+
+
+State 114
+
+    4 func_declare_or_def: KWID KWL_PAREN argument KWR_PAREN KWCOLON scalar_type KWSEMICOLON .
+
+    $default  reduce using rule 4 (func_declare_or_def)
+
+
+State 115
+
+    6 func_declare_or_def: KWID KWL_PAREN argument KWR_PAREN KWCOLON scalar_type compound_statement . KWEND
+
+    KWEND  shift, and go to state 140
+
+
+State 116
+
+   42 statement: KWID KWL_PAREN KWR_PAREN KWSEMICOLON .
+
+    $default  reduce using rule 42 (statement)
+
+
+State 117
+
+   46 comma_expression: comma_expression KWCOMMA . expression
+
+    KWID          shift, and go to state 65
+    KWL_PAREN     shift, and go to state 66
+    KWTRUE        shift, and go to state 26
+    KWFALSE       shift, and go to state 27
+    KWSCIENTIFIC  shift, and go to state 28
+    KWFLOAT       shift, and go to state 29
+    KWDECIMAL     shift, and go to state 30
+    KWSTRING      shift, and go to state 31
+    KWSUB         shift, and go to state 67
+    KWNOT         shift, and go to state 68
+
+    literal_const  go to state 69
+    var_reference  go to state 70
+    expression     go to state 141
+
+
+State 118
+
+   41 statement: KWID KWL_PAREN comma_expression KWR_PAREN . KWSEMICOLON
+
+    KWSEMICOLON  shift, and go to state 142
+
+
+State 119
+
+   30 zero_more_bracket: KWL_BRACKET expression KWR_BRACKET . zero_more_bracket
+
+    KWL_BRACKET  shift, and go to state 63
+
+    $default  reduce using rule 31 (zero_more_bracket)
+
+    zero_more_bracket  go to state 143
+
+
+State 120
+
+   49 expression: KWID KWL_PAREN KWR_PAREN .
+
+    $default  reduce using rule 49 (expression)
+
+
+State 121
+
+   46 comma_expression: comma_expression . KWCOMMA expression
+   48 expression: KWID KWL_PAREN comma_expression . KWR_PAREN
+
+    KWCOMMA    shift, and go to state 117
+    KWR_PAREN  shift, and go to state 144
+
+
+State 122
+
+   65 expression: KWL_PAREN expression KWR_PAREN .
+
+    $default  reduce using rule 65 (expression)
+
+
+State 123
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   54           | expression KWADD expression .
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    $default  reduce using rule 54 (expression)
+
+
+State 124
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   55           | expression KWSUB expression .
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    $default  reduce using rule 55 (expression)
+
+
+State 125
+
+   51 expression: expression . KWMUL expression
+   51           | expression KWMUL expression .
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    $default  reduce using rule 51 (expression)
+
+
+State 126
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   52           | expression KWDIV expression .
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    $default  reduce using rule 52 (expression)
+
+
+State 127
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   53           | expression KWMOD expression .
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    $default  reduce using rule 53 (expression)
+
+
+State 128
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   58           | expression KWLT expression .
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    $default  reduce using rule 58 (expression)
+
+
+State 129
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   57           | expression KWLE expression .
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    $default  reduce using rule 57 (expression)
+
+
+State 130
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   56           | expression KWNE expression .
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    $default  reduce using rule 56 (expression)
+
+
+State 131
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   59           | expression KWGE expression .
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    $default  reduce using rule 59 (expression)
+
+
+State 132
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   60           | expression KWGT expression .
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    $default  reduce using rule 60 (expression)
+
+
+State 133
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   61           | expression KWEQ expression .
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    $default  reduce using rule 61 (expression)
+
+
+State 134
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   62           | expression KWAND expression .
+   63           | expression . KWOR expression
+
+    $default  reduce using rule 62 (expression)
+
+
+State 135
+
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+   63           | expression KWOR expression .
+
+    $default  reduce using rule 63 (expression)
+
+
+State 136
+
+   38 statement: KWWHILE expression KWDO compound_statement . KWEND KWDO
+
+    KWEND  shift, and go to state 145
+
+
+State 137
+
+   36 statement: KWIF expression KWTHEN compound_statement . KWELSE compound_statement KWEND KWIF
+   37          | KWIF expression KWTHEN compound_statement . KWEND KWIF
+
+    KWEND   shift, and go to state 146
+    KWELSE  shift, and go to state 147
+
+
+State 138
+
+   39 statement: KWFOR KWID KWASSIGN KWDECIMAL . KWTO KWDECIMAL KWDO compound_statement KWEND KWDO
+
+    KWTO  shift, and go to state 148
+
+
+State 139
+
+   33 statement: var_reference KWASSIGN expression KWSEMICOLON .
+
+    $default  reduce using rule 33 (statement)
+
+
+State 140
+
+    6 func_declare_or_def: KWID KWL_PAREN argument KWR_PAREN KWCOLON scalar_type compound_statement KWEND .
+
+    $default  reduce using rule 6 (func_declare_or_def)
+
+
+State 141
+
+   46 comma_expression: comma_expression KWCOMMA expression .
+   51 expression: expression . KWMUL expression
+   52           | expression . KWDIV expression
+   53           | expression . KWMOD expression
+   54           | expression . KWADD expression
+   55           | expression . KWSUB expression
+   56           | expression . KWNE expression
+   57           | expression . KWLE expression
+   58           | expression . KWLT expression
+   59           | expression . KWGE expression
+   60           | expression . KWGT expression
+   61           | expression . KWEQ expression
+   62           | expression . KWAND expression
+   63           | expression . KWOR expression
+
+    KWADD  shift, and go to state 95
+    KWSUB  shift, and go to state 96
+    KWMUL  shift, and go to state 97
+    KWDIV  shift, and go to state 98
+    KWMOD  shift, and go to state 99
+    KWLT   shift, and go to state 100
+    KWLE   shift, and go to state 101
+    KWNE   shift, and go to state 102
+    KWGE   shift, and go to state 103
+    KWGT   shift, and go to state 104
+    KWEQ   shift, and go to state 105
+    KWAND  shift, and go to state 106
+    KWOR   shift, and go to state 107
+
+    $default  reduce using rule 46 (comma_expression)
+
+
+State 142
+
+   41 statement: KWID KWL_PAREN comma_expression KWR_PAREN KWSEMICOLON .
+
+    $default  reduce using rule 41 (statement)
+
+
+State 143
+
+   30 zero_more_bracket: KWL_BRACKET expression KWR_BRACKET zero_more_bracket .
+
+    $default  reduce using rule 30 (zero_more_bracket)
+
+
+State 144
+
+   48 expression: KWID KWL_PAREN comma_expression KWR_PAREN .
+
+    $default  reduce using rule 48 (expression)
+
+
+State 145
+
+   38 statement: KWWHILE expression KWDO compound_statement KWEND . KWDO
+
+    KWDO  shift, and go to state 149
+
+
+State 146
+
+   37 statement: KWIF expression KWTHEN compound_statement KWEND . KWIF
+
+    KWIF  shift, and go to state 150
+
+
+State 147
+
+   36 statement: KWIF expression KWTHEN compound_statement KWELSE . compound_statement KWEND KWIF
+
+    KWBEGIN  shift, and go to state 17
+
+    compound_statement  go to state 151
+
+
+State 148
+
+   39 statement: KWFOR KWID KWASSIGN KWDECIMAL KWTO . KWDECIMAL KWDO compound_statement KWEND KWDO
+
+    KWDECIMAL  shift, and go to state 152
+
+
+State 149
+
+   38 statement: KWWHILE expression KWDO compound_statement KWEND KWDO .
+
+    $default  reduce using rule 38 (statement)
+
+
+State 150
+
+   37 statement: KWIF expression KWTHEN compound_statement KWEND KWIF .
+
+    $default  reduce using rule 37 (statement)
+
+
+State 151
+
+   36 statement: KWIF expression KWTHEN compound_statement KWELSE compound_statement . KWEND KWIF
+
+    KWEND  shift, and go to state 153
+
+
+State 152
+
+   39 statement: KWFOR KWID KWASSIGN KWDECIMAL KWTO KWDECIMAL . KWDO compound_statement KWEND KWDO
+
+    KWDO  shift, and go to state 154
+
+
+State 153
+
+   36 statement: KWIF expression KWTHEN compound_statement KWELSE compound_statement KWEND . KWIF
+
+    KWIF  shift, and go to state 155
+
+
+State 154
+
+   39 statement: KWFOR KWID KWASSIGN KWDECIMAL KWTO KWDECIMAL KWDO . compound_statement KWEND KWDO
+
+    KWBEGIN  shift, and go to state 17
+
+    compound_statement  go to state 156
+
+
+State 155
+
+   36 statement: KWIF expression KWTHEN compound_statement KWELSE compound_statement KWEND KWIF .
+
+    $default  reduce using rule 36 (statement)
+
+
+State 156
+
+   39 statement: KWFOR KWID KWASSIGN KWDECIMAL KWTO KWDECIMAL KWDO compound_statement . KWEND KWDO
+
+    KWEND  shift, and go to state 157
+
+
+State 157
+
+   39 statement: KWFOR KWID KWASSIGN KWDECIMAL KWTO KWDECIMAL KWDO compound_statement KWEND . KWDO
+
+    KWDO  shift, and go to state 158
+
+
+State 158
+
+   39 statement: KWFOR KWID KWASSIGN KWDECIMAL KWTO KWDECIMAL KWDO compound_statement KWEND KWDO .
+
+    $default  reduce using rule 39 (statement)
